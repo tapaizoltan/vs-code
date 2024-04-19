@@ -13,3 +13,5 @@ Radio Deck -> https://filamentphp.com/plugins/jaocero-radio-deck
 Overlook -> https://filamentphp.com/plugins/awcodes-overlook
 Quick Create -> https://filamentphp.com/plugins/awcodes-quick-create
 Badgeable Column -> https://filamentphp.com/plugins/awcodes-badgeable-column
+Spotlight -> https://filamentphp.com/plugins/pxlrbt-spotlight
+Excel Export -> https://filamentphp.com/plugins/pxlrbt-excel
