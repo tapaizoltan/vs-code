@@ -54,3 +54,30 @@ php artisan blade-fontawesome:sync-icons --pro
 
 # használat:
 protected static ?string $navigationIcon = 'fas-magnifying-glass';
+
+# Felitrakozás eseményekre (azaz hogyan rögzítsük a felhasználók táblában a legutóbbi bejelentkezés idejét)
+
+(0) - Először migráljunk egy oszlopot a users táblába last_login_at néven.
+(2) - Nyissuk meg az app/Providers/EventServiceProvider.php-t és tegyük bele a protected $listen-be:
+'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin',
+        ],
+Így fog kinézni:
+
+protected $listen = [
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin',
+        ],
+    ];
+(3) - futtassuk: php artisan make:listener LogSucessfuLogin --event=Login
+(4) - Nyissuk meg szerkesztésre az app/Listeners/LogSucessfuLogin.php fájlt és tegyük bele:
+
+use Illuminate\Auth\Events\Login;
+public function handle(Login $event): void
+    {
+        //Log::info('siker'.Auth::id());
+        Auth::user()->update(['last_login_at' => now()]);
+    }
