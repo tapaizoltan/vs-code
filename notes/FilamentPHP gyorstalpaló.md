@@ -57,7 +57,8 @@ protected static ?string $navigationIcon = 'fas-magnifying-glass';
 
 # Felitrakozás eseményekre (azaz hogyan rögzítsük a felhasználók táblában a legutóbbi bejelentkezés idejét)
 
-(0) - Először migráljunk egy oszlopot a users táblába last_login_at néven.
+(1) - Először migráljunk egy oszlopot a users táblába last_login_at néven.
+# Laravel 10.x
 (2) - Nyissuk meg az app/Providers/EventServiceProvider.php-t és tegyük bele a protected $listen-be:
 'Illuminate\Auth\Events\Login' => [
             'App\Listeners\LogSuccessfulLogin',
@@ -72,6 +73,17 @@ protected $listen = [
             'App\Listeners\LogSuccessfulLogin',
         ],
     ];
+# Laravel 11.x
+(2) - Létre kell hozni egy event-et
+php artisan make:event Login
+
+majd ezt bele kell tenni:
+protected $listen = [
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin',
+        ],
+    ];
+
 (3) - futtassuk: php artisan make:listener LogSucessfuLogin --event=Login
 (4) - Nyissuk meg szerkesztésre az app/Listeners/LogSucessfuLogin.php fájlt és tegyük bele:
 
@@ -81,3 +93,4 @@ public function handle(Login $event): void
         //Log::info('siker'.Auth::id());
         Auth::user()->update(['last_login_at' => now()]);
     }
+
