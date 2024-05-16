@@ -54,3 +54,10 @@ git push -u origin main
 git remote add origin https://github.com/tapaizoltan/laravel-gyakorlo.git
 git branch -M main
 git push -u origin main
+
+# Repository klónozása (komitokkal együtt)
+git clone --bare https://github.com/EXAMPLE-USER/AZ_A_REPO_AMIT_KLONOZNI_AKARSZ.git
+cd AZ_A_REPO_AMIT_KLONOZNI_AKARSZ.git
+git push --mirror https://github.com/EXAMPLE-USER/AZ_A_REPO_AHOVA_AKAROK_KLONOZNI.git
+cd ..
+rm -rf AZ_A_REPO_AMIT_KLONOZNI_AKARSZ.git
